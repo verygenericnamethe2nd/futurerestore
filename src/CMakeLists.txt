@@ -16,6 +16,7 @@ if(NOT NO_PKGCFG)
             libssl
             libplist-2.0
             libimobiledevice-glue-1.0
+            libtatsu
             libimobiledevice-1.0
             libirecovery-1.0
             libusbmuxd-2.0
@@ -53,6 +54,7 @@ else()
             idevicerestore
             jssy
             curl
+            tatsu
             imobiledevice-glue-1.0
             imobiledevice-1.0
             irecovery-1.0
@@ -81,6 +83,7 @@ elseif("${CMAKE_HOST_SYSTEM_NAME}" MATCHES "MSYS" OR "${CMAKE_HOST_SYSTEM_NAME}"
                 patchfinder
                 insn
                 irecovery-1.0
+                tatsu
                 imobiledevice-1.0
                 usbmuxd-2.0
                 imobiledevice-glue-1.0

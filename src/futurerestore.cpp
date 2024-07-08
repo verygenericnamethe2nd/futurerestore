@@ -671,17 +671,17 @@ void futurerestore::enterPwnRecovery(plist_t build_identity, std::string bootarg
             info("Getting firmware keys for: %s\n", board.c_str());
             if (board == "n71ap" || board == "n71map" || board == "n69ap" || board == "n69uap" || board == "n66ap" || board == "n66map") {
                 if (!_noIBSS && !cache1) {
-                    iBSSKeys = libipatcher::getFirmwareKeyForComponent(_client->device->product_type, _client->build, "iBSS", _client->device->chip_id, board);
+                    iBSSKeys = libipatcher::getFirmwareKeyForComponent(_client->device->product_type, _client->build, "iBSS", 0, board);
                 }
                 if (!cache2) {
-                  iBECKeys = libipatcher::getFirmwareKeyForComponent(_client->device->product_type, _client->build, "iBEC", _client->device->chip_id, board);
+                  iBECKeys = libipatcher::getFirmwareKeyForComponent(_client->device->product_type, _client->build, "iBEC", 0, board);
                 }
             } else {
                 if (!_noIBSS && !cache1) {
-                    iBSSKeys = libipatcher::getFirmwareKeyForComponent(_client->device->product_type, _client->build, "iBSS", _client->device->chip_id);
+                    iBSSKeys = libipatcher::getFirmwareKeyForComponent(_client->device->product_type, _client->build, "iBSS", 0);
                 }
                 if (!cache2) {
-                    iBECKeys = libipatcher::getFirmwareKeyForComponent(_client->device->product_type, _client->build, "iBEC", _client->device->chip_id);
+                    iBECKeys = libipatcher::getFirmwareKeyForComponent(_client->device->product_type, _client->build, "iBEC", 0);
                 }
             }
         } catch (tihmstar::exception &e) {
@@ -1236,7 +1236,12 @@ void futurerestore::doRestore(const char *ipsw) {
             }
         } else {
             if (!img4tool::isIM4MSignatureValid({im4m.first, im4m.second})) {
-                info("IM4M signature is not valid!\n");
+                if (_skipBlob) {
+                  info("[WARNING] NOT VALIDATING SHSH BLOBS!\n");
+                } else {
+                  info("IM4M signature is not valid!\n");
+                  reterror("APTicket can't be used for this restore\n");
+                }
             }
             info("Verified APTicket to be valid for this restore\n");
         }
