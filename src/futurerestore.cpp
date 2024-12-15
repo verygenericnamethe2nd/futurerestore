@@ -207,7 +207,7 @@ futurerestore::futurerestore(bool isUpdateInstall, bool isPwnDfu, bool noIBSS, b
 #ifndef WIN32
     const char *update_check = std::getenv("FUTURERESTORE_SKIP_UPDATE_CHECK");
     if (update_check != nullptr) {
-        info("WARNING: User specified to skip checking for updates\n")
+        info("WARNING: User specified to skip checking for updates\n");
     } else {
         this->checkForUpdates();
     }
